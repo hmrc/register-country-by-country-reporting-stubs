@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.registercountrybycountryreportingstubs.config
+package utils
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import scala.io.Source
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+object Helper {
 
-  val appName: String = config.get[String]("appName")
+  def resourceAsString(resourcePath: String): Option[String] =
+    Option(getClass.getResourceAsStream(resourcePath)) map {
+      is =>
+        Source.fromInputStream(is).getLines.mkString("\n")
+    }
+
 }

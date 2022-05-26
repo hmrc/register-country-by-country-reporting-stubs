@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.registercountrybycountryreportingstubs.config
+package models
 
-import com.google.inject.AbstractModule
+import play.api.libs.json._
 
-class Module extends AbstractModule {
+case class NoIdOrganisation(organisationName: String)
 
-  override def configure(): Unit = {
+object NoIdOrganisation {
+  implicit val reads: Reads[NoIdOrganisation] = Json.reads[NoIdOrganisation]
+}
 
-    bind(classOf[AppConfig]).asEagerSingleton()
+
+case class Register(regime: String, organisation: NoIdOrganisation)
+
+object Register {
+
+  implicit lazy val reads: Reads[Register] = {
+    import play.api.libs.functional.syntax._
+    (
+      (__ \ "registerWithoutIDRequest" \ "requestCommon" \ "regime").read[String] and
+        (__ \ "registerWithoutIDRequest" \ "requestDetail" \ "organisation").read[NoIdOrganisation]
+    )(Register.apply _)
   }
 }
