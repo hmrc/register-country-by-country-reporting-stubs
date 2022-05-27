@@ -23,7 +23,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, defaultAwaitTimeout, route, status}
+import play.api.test.Helpers.{defaultAwaitTimeout, route, status, POST}
 import uk.gov.hmrc.http.HeaderNames
 
 class RegisterWithoutIdControllerSpec extends AnyFreeSpec with Matchers with GuiceOneAppPerSuite with OptionValues {
@@ -64,7 +64,7 @@ class RegisterWithoutIdControllerSpec extends AnyFreeSpec with Matchers with Gui
                                      |    }
                                      |  }
                                      |}""".stripMargin
-        val json: JsValue       = Json.parse(jsonPayload)
+        val json: JsValue = Json.parse(jsonPayload)
 
         val request = FakeRequest(POST, routes.RegisterWithoutIdController.register.url).withBody(json).withHeaders(authHeader)
         val result  = route(app, request).value
@@ -86,7 +86,7 @@ class RegisterWithoutIdControllerSpec extends AnyFreeSpec with Matchers with Gui
                                    |    }
                                    |  }
                                    |}""".stripMargin
-      val json: JsValue       = Json.parse(jsonPayload)
+      val json: JsValue = Json.parse(jsonPayload)
 
       val request = FakeRequest(POST, routes.RegisterWithoutIdController.register.url).withBody(json).withHeaders(authHeader)
       val result  = route(app, request).value
@@ -108,7 +108,7 @@ class RegisterWithoutIdControllerSpec extends AnyFreeSpec with Matchers with Gui
                                    |    }
                                    |  }
                                    |}""".stripMargin
-      val json: JsValue       = Json.parse(jsonPayload)
+      val json: JsValue = Json.parse(jsonPayload)
 
       val request = FakeRequest(POST, routes.RegisterWithoutIdController.register.url).withBody(json).withHeaders(authHeader)
       val result  = route(app, request).value

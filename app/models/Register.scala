@@ -24,7 +24,6 @@ object NoIdOrganisation {
   implicit val reads: Reads[NoIdOrganisation] = Json.reads[NoIdOrganisation]
 }
 
-
 case class Register(regime: String, organisation: NoIdOrganisation)
 
 object Register {

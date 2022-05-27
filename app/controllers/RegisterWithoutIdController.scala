@@ -25,33 +25,32 @@ import utils.Helper.resourceAsString
 
 import javax.inject.Inject
 
-class RegisterWithoutIdController @Inject()(cc: ControllerComponents, authFilter: AuthActionFilter) extends BackendController(cc) {
+class RegisterWithoutIdController @Inject() (cc: ControllerComponents, authFilter: AuthActionFilter) extends BackendController(cc) {
 
-  def register: Action[JsValue] = (Action(parse.json) andThen authFilter) {
-    implicit request =>
-      val regimeName = "CBC"
-      val register   = request.body.as[Register]
-      val orgName    = register.organisation.organisationName
+  def register: Action[JsValue] = (Action(parse.json) andThen authFilter) { implicit request =>
+    val regimeName = "CBC"
+    val register   = request.body.as[Register]
+    val orgName    = register.organisation.organisationName
 
-      (register.regime, orgName) match {
-        case (`regimeName`, "error")        => InternalServerError(resourceAsString(s"/resources/error/InternalServerError.json").get)
-        case (`regimeName`, "invalid")      => BadRequest(resourceAsString(s"/resources/error/BadRequest.json").get)
-        case (`regimeName`, "server")       => ServiceUnavailable(resourceAsString(s"/resources/error/ServiceUnavailable.json").get)
-        case (`regimeName`, "notProcessed") => ServiceUnavailable(resourceAsString(s"/resources/error/RequestCouldNotBeProcessed.json").get)
-        case (`regimeName`, "notFound")     => NotFound(resourceAsString(s"/resources/error/RecordNotFound.json").get)
-        case (`regimeName`, data) =>
-          val safeId = data match {
-            case "duplicate"  => "XE999923456789"
-            case "enrolment"  => "XE3333333333333"
-            case "organisation" => "XE5555523456789"
-            case _            => "XE2222123456789"
-          }
-          resourceAsString(s"/resources/register/withoutIdResponse.json") match {
-            case Some(response) => Ok(response.replace("[safeId]", safeId))
-            case _              => NotFound
-          }
-        case _ => BadRequest
-      }
+    (register.regime, orgName) match {
+      case (`regimeName`, "error")        => InternalServerError(resourceAsString(s"/resources/error/InternalServerError.json").get)
+      case (`regimeName`, "invalid")      => BadRequest(resourceAsString(s"/resources/error/BadRequest.json").get)
+      case (`regimeName`, "server")       => ServiceUnavailable(resourceAsString(s"/resources/error/ServiceUnavailable.json").get)
+      case (`regimeName`, "notProcessed") => ServiceUnavailable(resourceAsString(s"/resources/error/RequestCouldNotBeProcessed.json").get)
+      case (`regimeName`, "notFound")     => NotFound(resourceAsString(s"/resources/error/RecordNotFound.json").get)
+      case (`regimeName`, data) =>
+        val safeId = data match {
+          case "duplicate"    => "XE999923456789"
+          case "enrolment"    => "XE3333333333333"
+          case "organisation" => "XE5555523456789"
+          case _              => "XE2222123456789"
+        }
+        resourceAsString(s"/resources/register/withoutIdResponse.json") match {
+          case Some(response) => Ok(response.replace("[safeId]", safeId))
+          case _              => NotFound
+        }
+      case _ => BadRequest
+    }
   }
 
 }
