@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.registercountrybycountryreportingstubs.config
+package utils
 
-import com.google.inject.AbstractModule
+import scala.io.Source
 
-class Module extends AbstractModule {
+object Helper {
 
-  override def configure(): Unit = {
+  def resourceAsString(resourcePath: String): Option[String] =
+    Option(getClass.getResourceAsStream(resourcePath)) map { is =>
+      Source.fromInputStream(is).getLines.mkString("\n")
+    }
 
-    bind(classOf[AppConfig]).asEagerSingleton()
-  }
 }
