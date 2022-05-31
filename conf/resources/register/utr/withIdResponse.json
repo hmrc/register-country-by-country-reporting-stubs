@@ -1,0 +1,42 @@
+{
+  "registerWithIDResponse": {
+    "responseCommon": {
+      "status": "OK",
+      "statusText": "Sample status text",
+      "processingDate": "2016-08-16T15:55:30Z",
+      "returnParameters": [
+        {
+          "paramName": "SAP_NUMBER",
+          "paramValue": "0123456789"
+        }
+      ]
+    },
+    "responseDetail": {
+      "SAFEID": "[safeId]",
+      "ARN": "AARN1234567",
+      "isEditable": true,
+      "isAnAgent": false,
+      "isAnIndividual": true,
+      "organisation": {
+        "organisationName": "CBC Company",
+        "isAGroup": true,
+        "organisationType": "Not Specified",
+        "code": "0000"
+      },
+      "address": {
+        "addressLine1": "100 SuttonStreet",
+        "addressLine2": "Wokingham",
+        "addressLine3": "Surrey",
+        "addressLine4": "London",
+        "postalCode": "DH14EJ",
+        "countryCode": "GB"
+      },
+      "contactDetails": {
+        "phoneNumber": "01111111111",
+        "mobileNumber": "07777777777",
+        "faxNumber": "01111111111",
+        "emailAddress": "test@digital.hmrc.gov.uk"
+      }
+    }
+  }
+}
