@@ -1,6 +1,7 @@
 # microservice specific routes
 
 POST        /cbc/dct70a/v1                           controllers.RegisterWithoutIdController.register
+POST        /cbc/dct70b/v1                           controllers.RegisterWithIDController.register
 
 POST        /cbc/dct03/v1                            controllers.SubscriptionController.createSubscription
 
