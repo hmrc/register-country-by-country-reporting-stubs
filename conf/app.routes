@@ -4,5 +4,6 @@ POST        /cbc/dct70a/v1                           controllers.RegisterWithout
 POST        /cbc/dct70b/v1                           controllers.RegisterWithIDController.register
 
 POST        /cbc/dct03/v1                            controllers.SubscriptionController.createSubscription
+POST        /cbc/dct70d/v1                           controllers.SubscriptionController.readSubscription()
 
 GET         /enrolment-store-proxy/enrolment-store/enrolments/:serviceName/groups controllers.EnrolmentStoreProxyController.status(serviceName)

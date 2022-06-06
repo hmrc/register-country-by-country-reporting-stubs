@@ -263,5 +263,45 @@ class SubscriptionControllerSpec extends AnyFreeSpec with Matchers with GuiceOne
       }
     }
 
+    "readSubscription" - {
+      "submit and return response OK for valid input" in {
+        val jsonPayload: String =
+          s"""
+             |{
+             |  "displaySubscriptionForCBCRequest": {
+             |    "requestDetail": {
+             |      "IDType": "CBC",
+             |      "IDNumber": "XACBC0000123778"
+             |    }
+             |  }
+             |}""".stripMargin
+        val json: JsValue = Json.parse(jsonPayload)
+
+        val request = FakeRequest(POST, routes.SubscriptionController.readSubscription().url).withBody(json)
+        val result  = route(app, request).value
+
+        status(result) shouldBe OK
+      }
+
+      "submit and return response ServiceUnavailable for invalid input" in {
+        val jsonPayload: String =
+          s"""
+             |{
+             |  "displaySubscriptionForCBCRequest": {
+             |    "requestDetail": {
+             |      "IDType": "CBC",
+             |      "IDNumber": "XE0000123456777"
+             |    }
+             |  }
+             |}""".stripMargin
+        val json: JsValue = Json.parse(jsonPayload)
+
+        val request = FakeRequest(POST, routes.SubscriptionController.readSubscription().url).withBody(json)
+        val result  = route(app, request).value
+
+        status(result) shouldBe SERVICE_UNAVAILABLE
+      }
+    }
+
   }
 }
