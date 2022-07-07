@@ -25,7 +25,7 @@ import utils.Helper._
 
 import javax.inject.Inject
 
-class SubscriptionController @Inject() (cc: ControllerComponents, authFilter: AuthActionFilter) extends BackendController(cc) {
+class SubscriptionController @Inject() (cc: ControllerComponents, authFilter: AuthActionFilter) extends BackendController(cc) with Logging {
 
   def createSubscription(): Action[JsValue] = (Action(parse.json) andThen authFilter) { implicit request =>
     val regime = "CBC"
@@ -40,13 +40,13 @@ class SubscriptionController @Inject() (cc: ControllerComponents, authFilter: Au
           case (`regime`, "server", _)    => ServiceUnavailable(resourceAsString(s"/resources/error/ServiceUnavailable.json").get)
           case (`regime`, "notFound", _)  => NotFound(resourceAsString(s"/resources/error/RecordNotFound.json").get)
           case (`regime`, _, "XE0000123456789") =>
-            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XAMDR0000111111")).get)
+            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XACBC0000111111")).get)
           case (`regime`, _, "XE0000987654321") =>
-            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XAMDR0000222222")).get)
+            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XACBC0000222222")).get)
           case (`regime`, _, "XE5555523456789") =>
-            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XAMDR0000444444")).get)
+            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XACBC0000444444")).get)
           case (`regime`, _, _) =>
-            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XAMDR000033333")).get)
+            Ok(resourceAsString("/resources/subscription/CBCCreateSubscriptionResponse.json").map(replaceSubscriptionId(_, "XACBC000033333")).get)
           case _ => BadRequest
         }
       case _ => BadRequest
@@ -68,6 +68,12 @@ class SubscriptionController @Inject() (cc: ControllerComponents, authFilter: Au
         Ok(
           resourceAsString(s"/resources/subscription/displaySubscription.json")
             .map(r => replaceSubscriptionId(r, "XACBC0000123778"))
+            .get
+        )
+      case "XACBC0000111111" =>
+        Ok(
+          resourceAsString(s"/resources/subscription/displaySubscription.json")
+            .map(r => replaceSubscriptionId(r, "XACBC0000111111"))
             .get
         )
       case _ => ServiceUnavailable(resourceAsString(s"/resources/error/ServiceUnavailable.json").get)
