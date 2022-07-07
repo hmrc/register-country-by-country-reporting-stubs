@@ -22,14 +22,14 @@ import play.api.libs.json.JsValue
 import play.api.mvc.{Action, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import utils.Helper._
-
+import play.api.Logging
 import javax.inject.Inject
 
 class SubscriptionController @Inject() (cc: ControllerComponents, authFilter: AuthActionFilter) extends BackendController(cc) with Logging {
 
   def createSubscription(): Action[JsValue] = (Action(parse.json) andThen authFilter) { implicit request =>
     val regime = "CBC"
-
+    logger.info(s"Request recieved ${request.body}")
     request.body.asOpt[CBCSubscription] match {
       case Some(input) =>
         val organisationName = input.organisation
