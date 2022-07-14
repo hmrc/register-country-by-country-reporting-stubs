@@ -40,7 +40,7 @@ class RegisterWithoutIdController @Inject() (cc: ControllerComponents, authFilte
       case (`regimeName`, "notFound")     => NotFound(resourceAsString(s"/resources/error/RecordNotFound.json").get)
       case (`regimeName`, data) =>
         val safeId = data match {
-          case "duplicate"    => "XE999923456789"
+          case "duplicate"    => "XACBC0000123777"
           case "enrolment"    => "XE3333333333333"
           case "organisation" => "XE5555523456789"
           case _              => "XE2222123456789"
