@@ -70,6 +70,12 @@ class SubscriptionController @Inject() (cc: ControllerComponents, authFilter: Au
             .map(r => replaceSubscriptionId(r, "XACBC0000123778"))
             .get
         )
+      case "XACBC0000123888" =>
+        Ok(
+          resourceAsString(s"/resources/subscription/displaySubscription.json")
+            .map(r => replaceSubscriptionId(r, "XACBC0000123888"))
+            .get
+        )
       case "XACBC0000111111" =>
         Ok(
           resourceAsString(s"/resources/subscription/displaySubscription.json")

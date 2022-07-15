@@ -43,7 +43,7 @@ class RegisterWithIDController @Inject() (cc: ControllerComponents, authFilter: 
           case "1234567890" => Some("XE0000123456789")
           case "1234567891" => Some("XE0000987654321")
           case "2222222222" => Some("XACBC0000123777")
-          case "3333333333" => Some("XE3333333333333")
+          case "3333333333" => Some("XACBC0000123888")
           case _            => None
         }).flatMap { safeId =>
           val path = getWithIdResponse(requestDetail)
